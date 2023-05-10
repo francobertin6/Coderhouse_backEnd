@@ -1,0 +1,33 @@
+
+<h1>Detalle de producto</h1>
+
+<article id="productInfo_Container">
+
+    {{#each producto}}
+
+        <div id="productTitle">
+            <h3>{{this.title}}</h3>
+        </div>
+
+        <div id="productDescription">
+            <p>{{this.description}}</p>
+        </div>
+
+        <img src="" alt="imagen">
+
+        <div id="productPrice">
+            <p>{{this.price}}</p>
+        </div>
+
+        <button>Agregar al carrito</button>
+
+    {{/each}}
+
+</article>
+
+
+
+
+
+<script src="{{socket}}"></script>
+<script src="{{index}}"></script>

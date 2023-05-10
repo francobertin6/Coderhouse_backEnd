@@ -1,0 +1,31 @@
+
+<nav>
+
+    <div id="optionsUser">
+        <p> tipo de usuario <span id = "typeUser"></span></p>
+        <button id="logout">LogOut</button>
+    </div>
+
+</nav>
+
+
+
+<div id="title">
+    <h1>Bienvenido <span id="name"></span></h1>
+</div>
+
+<section id="productsContainer">
+    {{#each productos}}
+    <article class="products">
+        <div class="productTitle">
+            <h3>{{this.title}}</h3>
+        </div>
+        <img src={{this.thumbnail}} alt="" height="350px" width="350px"></img>
+        <button id={{this._id}}>Ver mas</button>
+    </article>
+{{/each}}
+</section>
+
+
+<script src="{{socket}}"></script>
+<script src="{{index}}"></script>

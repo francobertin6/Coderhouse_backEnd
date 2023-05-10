@@ -1,0 +1,46 @@
+
+#title{
+    
+    width: 100vw;
+    height: 15vh;
+    text-align: center;
+}
+
+#productsContainer{
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    
+    width: 100vw;
+    height: max-content;
+}
+
+#productsContainer .products{
+
+    position: relative;
+
+    width: 30vw;
+    height: 60vh;
+
+    border: 2px solid black;
+}
+
+#productsContainer .productTitle{
+    position: absolute;
+    top: 0;
+
+    background-color: aquamarine;
+    width: 30vw;
+    height: 5vh;
+}
+
+#productsContainer .productTitle h3{
+    position: absolute;
+    
+    margin: auto;
+    top: 5%;
+    left: 2%;
+
+}

@@ -1,0 +1,64 @@
+
+<section id="login_and_register_Container">
+
+    <article id="img_and_titleContainer">
+        <h1>Bienvenidos a la pagina</h1>
+    </article>
+
+    <article id="Login_and_registerFormContainer">
+
+        {{#if mode}}
+
+            <div id="loginContainer">
+                <form action="http://localhost:8080/userDB/LoginUser" method="get">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="usernameLogin"> <br>
+
+                    <label for="password">Password</label>
+                    <input type="text" name="password" id="passwordLogin"> <br>
+
+                    <button type="submit" id="login">Ingresar</button>
+                    <a href="http://localhost:8080/userDB/github_login" role="button" id="github_login">Ingresar por Github</a>
+                    <button id="change_register">Registrarse</button>
+                </form>
+            </div>
+
+        {{else}}
+
+            <div id="registerContainer">
+                <form action="http://localhost:8080/userDB/Post_dbusers" method="post">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username"> <br>
+
+                    <label for="password">Password</label>
+                    <input type="text" name="password" id="password"> <br>
+
+                    <label for="name">name</label>
+                    <input type="text" name="name" id="name"> <br>
+
+                    <label for="lastname">lastname</label>
+                    <input type="text" name="lastname" id="lastname"> <br>
+
+                    <label for="email">email</label>
+                    <input type="email" name="email" id="email"> <br>
+
+                    <label for="age">edad</label>
+                    <input type="number" name="age" id="age"> <br>
+
+                    <label for="dni">dni</label>
+                    <input type="number" name="dni" id="dni"> <br>
+
+                    <button type="submit" id="register">Registrarse</button> 
+                    <button id="change_login">Ingresar</button>
+                </form>
+            </div>
+
+        {{/if}}
+
+    </article>
+
+</section>
+
+
+<script src="{{socket}}"></script>
+<script src="{{login}}"></script>
