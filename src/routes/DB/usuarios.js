@@ -4,7 +4,7 @@ import passport from "passport";
 import { GenerateToken } from "../../../utils.js";
 import Jwt  from "jsonwebtoken";
 
-import usersDBcontroller from "../../dao/dataBaseApi/usersDB.js";
+import usersDBcontroller from "../../dao/Repositories/usersDB.js";
 import modelUsers from "../../dao/models/modelUsers.js";
 
 

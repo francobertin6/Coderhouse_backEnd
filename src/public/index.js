@@ -39,7 +39,7 @@ let logOut = document.getElementById("logout");
 logOut.addEventListener("click", async (e) => {
 
     e.preventDefault();
-    let result = await fetch('http://127.0.0.1:8080/cookies/delete_cookies/UserData');
+    let result = await fetch('http://127.0.0.1:8080/cookies/delete_cookies/JWT');
 
     console.log(result);
 

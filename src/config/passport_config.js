@@ -3,7 +3,7 @@ import { Strategy as localStrategy } from 'passport-local';
 import { Strategy as GithubStrategy } from "passport-github2";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import modelUsers from "../dao/models/modelUsers.js";
-import modelCarts from "../dao/models/modelCarts.js";
+import carritoDBcontroller from "../dao/Repositories/cartsDB.js";
 import { createHash, isvalidPassword } from "../../utils.js";
 
 
@@ -32,6 +32,10 @@ const initializePassport = () => {
 
         }else{
 
+        let carrito = await carritoDBcontroller.create();
+
+        console.log(carrito)
+
         const usuario = {
             username: username,
             password: createHash(password),
@@ -40,6 +44,7 @@ const initializePassport = () => {
             email: email,
             age: age,
             dni: dni,
+            cart: carrito,
             typeUser: "user"
         }
 

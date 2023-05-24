@@ -21,6 +21,7 @@ export const GenerateToken = (user) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        cart: user.cart,
         typeUser: user.typeUser
     }
     const token = Jwt.sign(payload, process.env.PRIVATE_KEYS,{expiresIn:'24h'});
@@ -46,7 +47,26 @@ export const authToken = (Strategy) => (req,res,next) => {
     })(req,res,next)
 }
 
+// middleware : TYPEUSER_check
 
+export const TypeUserCheck = (typeuser) => (req,res,next) => {
+
+    let user = Jwt.decode(req.cookies.JWT);
+
+    console.log(user)
+
+    if(user.typeUser === typeuser){
+
+        next();
+
+    }
+    else{
+
+        res.status(401).send("el usuario no tiene los permisos para realizar esta accion")
+
+    }
+
+}
 
 
 export default _Dirname;
