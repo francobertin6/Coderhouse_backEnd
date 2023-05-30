@@ -53,10 +53,10 @@ export const TypeUserCheck = (typeuser) => (req,res,next) => {
 
     let user = Jwt.decode(req.cookies.JWT);
 
-    console.log(user)
 
     if(user.typeUser === typeuser){
 
+        req.user = user;
         next();
 
     }

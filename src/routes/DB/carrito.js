@@ -3,6 +3,8 @@ import _Dirname from "../../../utils.js";
 import { TypeUserCheck } from "../../../utils.js";
 
 import carritoDBcontroller from "../../dao/Repositories/cartsDB.js";
+import modelProducts from "../../dao/models/modelProducts.js"
+import modelCarts from "../../dao/models/modelCarts.js";
 
 const cartsDB = express.Router();
 cartsDB.use(express.json());
@@ -82,6 +84,8 @@ cartsDB.put("/Put_dbcarrito/purchase", TypeUserCheck("user"), async (req,res) =>
     
     });
 
+    //console.log(data);
+
     let enoughStock = data.filter( (element) => {
         if(element.quantity > element.stock){
             return element;
@@ -89,14 +93,61 @@ cartsDB.put("/Put_dbcarrito/purchase", TypeUserCheck("user"), async (req,res) =>
     });
 
 
-    if(enoughStock.length === 0){
+    if(enoughStock.length === 0 && data.length !== 0){
+
+        data.forEach(async (element) => {
+
+            let producto = await modelProducts.findById(element.id_producto.toString());
+
+            console.log("opt1: " + producto);
+
+            let newQuantity = producto.stock - element.quantity;
+
+            await modelProducts.updateOne( {_id: element.id_producto.toString()}, {$set: {stock: newQuantity}});
+
+        })
+
+        await modelCarts.updateOne( {_id: req.user.cart}, {$set:{products: []}})
 
         res.status(200).send("todos los productos tienen stock y pueden proceder a ser comprados");
 
-    }else{
+    }else if(enoughStock.length !== 0 && data.length !== 0){
+
+        data.forEach(async (element) => {
+
+            let producto = await modelProducts.findById(element.id_producto.toString());
+
+            //console.log("opt2: " + producto)
+
+            if(element.quantity > producto.stock){
+
+                //console.log(element);
+
+            }else{
+
+                let newQuantity = producto.stock - element.quantity 
+
+                await modelProducts.updateOne( {_id: element.id_producto.toString()}, {$set: {stock: newQuantity}});
+            }
+
+        })
+
+        let filterCart = data.filter((element) => {
+
+            if(element.quantity > element.stock){
+                return element
+            }
+
+        })
+            
+        console.log(filterCart);
+
+        await modelCarts.updateOne( {_id: req.user.cart}, {$set:{products: filterCart}});
 
         res.status(404).send("uno de los productos no tiene suficiente stock, esta compra no puede ser efectuada");
 
+    }else{
+        res.status(404).send("no hay productos en el carrito")
     }
 
 })
