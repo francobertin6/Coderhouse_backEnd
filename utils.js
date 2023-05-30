@@ -3,7 +3,7 @@ import { dirname } from "path";
 import  Jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import passport from "passport";
-
+import {faker} from "@faker-js/faker";
 
 const fileName = fileURLToPath(import.meta.url);
 const _Dirname = dirname(fileName);
@@ -66,6 +66,22 @@ export const TypeUserCheck = (typeuser) => (req,res,next) => {
 
     }
 
+}
+
+// MOCKING TOOL
+
+export const ProductsMockingTool = () => {
+
+    return({
+        "title": faker.commerce.productName(),
+        "description": faker.commerce.productDescription(),
+        "price": faker.commerce.price(),
+        "Thumbnail": faker.image.urlPlaceholder({format:"jpg"}),
+        "code": faker.finance.accountNumber(5),
+        "stock": faker.number.int({max: 100}),
+        "status": true
+    })
+    
 }
 
 

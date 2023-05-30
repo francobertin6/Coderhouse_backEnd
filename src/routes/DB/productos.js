@@ -3,6 +3,8 @@ import _Dirname from "../../../utils.js";
 
 import productosDBcontroller from "../../dao/Repositories/productsDB.js";
 import { authToken, TypeUserCheck } from "../../../utils.js";
+import modelProducts from "../../dao/models/modelProducts.js";
+
 
 const productsDB = express.Router();
 productsDB.use(express.json());
@@ -55,6 +57,23 @@ productsDB.get("/product/:cid", authToken("jwt"), async (req,res) => {
     res.render("product", scripts)
 
 });
+
+// MockingProductsService
+
+productsDB.post("/MockingProducts", async(req,res) => {
+
+    let productos = productosDBcontroller.MockingProducts();
+
+
+    (await productos).forEach(async (element) => {
+
+        await modelProducts.create(element)
+
+    })
+
+    res.status(200).send("los productos han sido creados")
+
+})
 
 
 export default productsDB

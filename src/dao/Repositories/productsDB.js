@@ -1,6 +1,7 @@
 "use strict";
 
 import modelProducts from "../models/modelProducts.js";
+import { ProductsMockingTool } from "../../../utils.js";
 
 
 class productosDBcontroller {
@@ -49,6 +50,23 @@ class productosDBcontroller {
         await modelProducts.deleteOne({_id: id});
 
         res.status(204).send("producto eliminado");
+    }
+
+    // MockingProducts
+
+    static async MockingProducts(){
+
+        let productos = [];
+
+         for (let index = 0; index <= 100; index++) {
+
+            
+            productos.push(ProductsMockingTool());
+            
+        }
+
+        return(productos);
+
     }
 
 }
