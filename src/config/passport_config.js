@@ -5,7 +5,9 @@ import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 import modelUsers from "../dao/models/modelUsers.js";
 import carritoDBcontroller from "../dao/Repositories/cartsDB.js";
 import { createHash, isvalidPassword } from "../../utils.js";
-
+import CustomErrors from "../../Errors/CustomErrors.js";
+import { GeneratorUserError } from "../../Errors/MessageErrors.js";
+import EError from "../../Errors/ErrorEnums.js";
 
 
 const initializePassport = () => {
@@ -19,9 +21,16 @@ const initializePassport = () => {
 
         try{
 
-        if(!username || !name || !lastname || !dni || !age){
+        if(!username || !name || !lastname || !dni || !age || !email || !password){
             console.log(req.body)
-            return done( new Error("todos los campos deben ser completados"));
+            let error = CustomErrors.CreateError({
+                name: "user registration error",
+                cause: GeneratorUserError(req.body),
+                message: "error al tratar de registrar un usuario",
+                code: EError.INVALID_TYPES_ERROR
+            })
+            console.log(error);
+            done(error);
         }
 
         let checkUser = await modelUsers.findOne({email: email});

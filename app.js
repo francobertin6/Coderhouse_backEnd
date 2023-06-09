@@ -9,6 +9,7 @@ import { init } from "./src/db/mongodb.js";
 import cookieParser from "cookie-parser";
 import passport from "passport";
 import initializePassport from "./src/config/passport_config.js";
+import { addLogger } from "./Logger/Logger.js";
 
 
 
@@ -32,6 +33,7 @@ server.use(session({
 initializePassport();
 server.use(passport.initialize());
 server.use(passport.session());
+server.use(addLogger);
 
 
 // server

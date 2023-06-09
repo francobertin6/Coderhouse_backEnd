@@ -23,8 +23,6 @@ productsDB.get("/Get_dbproduct", authToken('jwt'), async (req,res) => {
 
     let productos = await productosDBcontroller.get(req,res);
 
-    console.log(productos);
-
     const scripts = { socket: '/socket.io/socket.io.js', index: 'index.js', productos: productos }
 
     res.render("index", scripts);
