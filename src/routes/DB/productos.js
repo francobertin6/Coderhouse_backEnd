@@ -11,7 +11,7 @@ productsDB.use(express.json());
 productsDB.use(express.static(_Dirname + "/src/public"));
 
 
-productsDB.post( "/Post_dbproduct", TypeUserCheck("admin"), (req, res) => {
+productsDB.post( "/Post_dbproduct", TypeUserCheck(), (req, res) => {
 
     productosDBcontroller.create(req,res);
 
@@ -29,13 +29,13 @@ productsDB.get("/Get_dbproduct", authToken('jwt'), async (req,res) => {
 
 });
 
-productsDB.put( "/Put_dbproduct/:id", TypeUserCheck("admin"), (req,res) => {
+productsDB.put( "/Put_dbproduct/:id", TypeUserCheck(), (req,res) => {
 
     productosDBcontroller.putByid(req,res);
 
 });
 
-productsDB.delete( "/Delete_dbproduct/:id", TypeUserCheck("admin"), (req,res) => {
+productsDB.delete( "/Delete_dbproduct/:id", TypeUserCheck(), (req,res) => {
 
     productosDBcontroller.deleteByid(req,res);
 

@@ -58,6 +58,8 @@ const initializePassport = () => {
         }
 
         let user = await modelUsers.create(usuario);
+
+        req.user = user;
         
         done(null, user);
 

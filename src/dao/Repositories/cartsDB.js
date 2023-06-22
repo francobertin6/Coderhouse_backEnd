@@ -1,5 +1,5 @@
 
-
+import modelProducts from "../models/modelProducts.js";
 import modelCarts from "../models/modelCarts.js";
 import  Jwt  from "jsonwebtoken";
 
@@ -49,18 +49,27 @@ class carritoDBcontroller {
     //AGREGO UN PRODUCTO EN UN CARRITO EN ESPECIFICO: PASA POR BODY SOLO EL PID Y CID
       static async addProductToCart(req, res) {
 
+        let user =  Jwt.decode(req.cookies.JWT);
+
         const {  params : {pid, cid}, body } = req;
     
         try {
 
           const cart = await modelCarts.findById(cid).populate("products.product");
+          const product = await modelProducts.findById(pid);
           
+          console.log(product)
 
           if (!cart) {
 
             return res.status(404).json({ message: "CART NOT FOUND" });
 
+          }else if(user.id === product.owner){
+
+            return res.status(400).send("el producto es de la propiedad del usuario por lo tanto no puede agregarlo a su carrito")
+
           }
+
 
           const productIndex = cart.products.findIndex( (p) => p.product._id.toString() === pid);
 

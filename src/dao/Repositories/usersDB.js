@@ -2,6 +2,7 @@
 import modelUsers from "../models/modelUsers.js";
 import { createHash } from "../../../utils.js";
 import { isvalidPassword } from "../../../utils.js";
+import  Jwt  from "jsonwebtoken";
 
 
 class usersDBcontroller {
@@ -65,6 +66,30 @@ class usersDBcontroller {
         }
     }
 
+    static async changeTypeUser( req,res ){
+
+        let JwtCookie = Jwt.decode(req.cookies.JWT);
+
+        let typeUser = req.params.typeUser;
+
+        let user = await modelUsers.findById(JwtCookie.id);
+
+
+        if(user !== undefined){
+
+            res.status(200).send("el tipo de usuario se ha modificado");
+
+        }else{
+
+            res.status(404).send("el tipo de usuario no pudo ser modificado");
+
+        }
+
+        user.typeUser = typeUser;
+
+        user.save();
+
+    }
 }
 
 export default usersDBcontroller;

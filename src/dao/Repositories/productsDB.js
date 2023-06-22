@@ -8,8 +8,20 @@ class productosDBcontroller {
 
     static async create( req,res ){
 
+        console.log(req.user);
+
         const {body} = req;
 
+        if(req.user.typeUser === "premium"){
+
+            body.owner = req.user.id;
+
+        }else if(req.user.typeUser === "admin"){
+
+            body.owner = "admin"
+
+        }
+        
         const producto = {
 
             ...body
@@ -19,7 +31,6 @@ class productosDBcontroller {
         console.log(producto);
 
         const result = await modelProducts.create(producto);
-
 
         res.status(201).json(result)
 
@@ -38,18 +49,55 @@ class productosDBcontroller {
 
         const { params : { id }, body} = req;
 
-        await modelProducts.updateOne( {_id: id}, {$set: body});
+        let user = req.user;
 
-        res.status(204).send("producto actualizado")
+        
+        if(user.typeUser === "premium" && body.owner === user.id){
+
+            await modelProducts.updateOne( {_id: id}, {$set: body});
+
+            res.status(204).send("producto actualizado por el admin")
+
+        }else if(user.typeUser === "admin"){
+
+            await modelProducts.updateOne( {_id: id}, {$set: body});
+
+            res.status(204).send("producto actualizado por el dueño del producto")
+
+        }else if(user.typeUser === "premium" && body.owner !== user.id){
+
+            res.status(404).send("el usuario no puede modificar un producto que no es suyo")
+
+        }
+
     }
 
     static async deleteByid( req,res ){
 
+        let user = req.user;
+
         const { params: {id} } = req;
 
-        await modelProducts.deleteOne({_id: id});
+        let producto = await modelProducts.findById(id);
 
-        res.status(204).send("producto eliminado");
+        if(user.typeUser === "admin"){
+
+            await modelProducts.deleteOne({_id: id});
+
+            res.status(204).send("producto eliminado por el admin");
+        }
+        else if(user.typeUser === "premium" && producto.owner === user.id){
+
+            await modelProducts.deleteOne({_id: id});
+
+            res.status(204).send("producto eliminado por su dueño");
+        }
+        else if(user.typeUser === "premium" && producto.owner !== user.id){
+
+            res.status(400).send("el usuario no puede eliminar un producto que no es suyo")
+
+        }
+        
     }
 
     // MockingProducts

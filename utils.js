@@ -49,12 +49,13 @@ export const authToken = (Strategy) => (req,res,next) => {
 
 // middleware : TYPEUSER_check
 
-export const TypeUserCheck = (typeuser) => (req,res,next) => {
+export const TypeUserCheck = () => (req,res,next) => {
 
     let user = Jwt.decode(req.cookies.JWT);
 
+    console.log(user);
 
-    if(user.typeUser === typeuser){
+    if(user.typeUser === "admin" || "premium"){
 
         req.user = user;
         next();

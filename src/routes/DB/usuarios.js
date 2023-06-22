@@ -8,6 +8,7 @@ import usersDBcontroller from "../../dao/Repositories/usersDB.js";
 import modelUsers from "../../dao/models/modelUsers.js";
 
 
+
 const usersDB = express.Router();
 usersDB.use(express.json());
 usersDB.use(express.static(_Dirname + "/src/public"));
@@ -67,6 +68,12 @@ usersDB.get("/current", async (req,res) => {
 
 });
 
+// METODO PARA CAMBIAR A UN USUARIO DE USER COMUN A PREMIUM
+usersDB.put("/changeTypeUser/:typeUser", async (req,res) => {
+
+    usersDBcontroller.changeTypeUser(req,res);
+
+})
 
 // login con github
 usersDB.get("/github_login", passport.authenticate('github', {scope: ['user:email']}))
