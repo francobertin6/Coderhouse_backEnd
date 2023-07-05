@@ -4,6 +4,7 @@ import  Jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import {faker} from "@faker-js/faker";
+import nodemailer from "nodemailer";
 
 const fileName = fileURLToPath(import.meta.url);
 const _Dirname = dirname(fileName);
@@ -84,6 +85,17 @@ export const ProductsMockingTool = () => {
     })
     
 }
+
+// NODEMAILER: transport
+
+export const transport = nodemailer.createTransport({
+    service:'gmail',
+    port:587,
+    auth:{
+        user: "francobertin6@gmail.com",
+        pass: "cwadeavrkkxrrrmt"
+    }
+})
 
 
 export default _Dirname;

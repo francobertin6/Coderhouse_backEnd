@@ -10,7 +10,9 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import initializePassport from "./src/config/passport_config.js";
 import { addLogger } from "./Logger/Logger.js";
-
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express"
+import path from "path";
 
 
 //mongoDb imports/connection
@@ -60,12 +62,15 @@ server.use(Express.static(_Dirname + "/src/views/layouts"));
 import productsDB from "./src/routes/DB/productos.js";
 import cartsDB from "./src/routes/DB/carrito.js";
 import usersDB from "./src/routes/DB/usuarios.js";
+import mail from "./src/routes/DB/mail.js";
+
 
 
 // endpoints
 server.use("/productsDB", productsDB);
 server.use("/cartsDB", cartsDB);
-server.use("/userDB", usersDB)
+server.use("/userDB", usersDB);
+server.use("/mail", mail);
 
 
 // login/register
@@ -101,8 +106,6 @@ server.get("/cookies/delete_cookies/:cookie", (req,res) => {
 
 })
 
-
-
 //socket
 io.on('connection', (clienteSocket) => {
 
@@ -120,5 +123,20 @@ io.on('connection', (clienteSocket) => {
 })
 
 
+//Swagger
+
+const SwaggerOptions = {
+    definition:{
+        openapi: '3.0.1',
+        info:{
+            title: "coderHouse backEnd",
+            description: "description"
+        }
+    },
+    apis:[path.join(`${_Dirname}/src/docs/**/*.yaml`)]
+}
 
 
+const specs = swaggerJSDoc(SwaggerOptions);
+
+server.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs)); 

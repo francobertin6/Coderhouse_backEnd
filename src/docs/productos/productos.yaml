@@ -1,0 +1,31 @@
+paths:
+  /productsDB/Post_dbproduct:
+    post:
+      summary: crea producto
+      tags:
+      - productos
+  /productsDB/Get_dbproduct:
+    get:
+      summary: devuelve todos los productos
+      tags:
+      - productos
+  /productsDB/Put_dbproduct/:id:
+    put:
+      summary: modificar productos por id
+      tags:
+      - productos
+  /productsDB/Delete_dbproduct/:id:
+    delete:
+      summary: eliminar producto por id
+      tags: 
+      - productos
+  /productsDB/product/:cid:
+    get:
+      summary: devuelve un producto en especifico
+      tags:
+      - productos
+  /productsDB/MockingProducts:
+    post:
+      summary: creacion de productos por mocking
+      tags:
+      - productos
