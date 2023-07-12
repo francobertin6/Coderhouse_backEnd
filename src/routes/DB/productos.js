@@ -27,6 +27,8 @@ productsDB.get("/Get_dbproduct", authToken('jwt'), async (req,res) => {
 
     res.render("index", scripts);
 
+    res.status(200).send(productos);
+
 });
 
 productsDB.put( "/Put_dbproduct/:id", TypeUserCheck(), (req,res) => {

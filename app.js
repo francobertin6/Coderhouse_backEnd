@@ -136,7 +136,6 @@ const SwaggerOptions = {
     apis:[path.join(`${_Dirname}/src/docs/**/*.yaml`)]
 }
 
-
 const specs = swaggerJSDoc(SwaggerOptions);
 
 server.use("/api/docs", swaggerUi.serve, swaggerUi.setup(specs)); 

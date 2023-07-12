@@ -44,6 +44,8 @@ cartsDB.get( "/Get_dbcarrito/:id?", async (req,res) => {
 
     res.render("cart", scripts);
 
+    res.status(200).send(scripts.cart)
+
 });
 // devuelve un carrito en especifico
 cartsDB.get( "/Get_dbcarrito/:cid", (req,res) => {

@@ -51,7 +51,7 @@ usersDB.post("/cookies/set_cookies", async (req,res) => {
 
         res.cookie("JWT", token)
 
-        res.status(200).json("el token se guardo correctamente")
+        res.status(200).send(token);
     }
 });
 
